@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-This guide will help you add OTA functionality to your Tesla build. 
+This guide will help you add OTA functionality to your Broken build. 
 
 We need two files, ota-lollipop.xml and ota_conf
 
 Use the templates for ota_lollipop.xml and ota_conf, i will paste mine below in here
 
-Create a folder for your Tesla builds ether on AFH or on the website. The folder link will be used in the ota files.
+Create a folder for your Broken builds ether on AFH or on the website. The folder link will be used in the ota files.
 Keep in mind that when using afh, the download button will open the browser on the afh paga, i don't wan't that
 So i will be using validusrom.com and make them download immediately.
 
@@ -17,7 +17,7 @@ Add a &amp; after the word files. So, using the above example, this is what you 
 
                                      <RomUrl>https://www.androidfilehost.com/?w=files&amp;flid=34631</RomUrl>
 
-For the device name, open terminal and type in getprop ro.tesla.device. Use this name in ota_lollipop.xml in the mentioned place.
+For the device name, open terminal and type in getprop ro.broken.device. Use this name in ota_lollipop.xml in the mentioned place.
 
 Now, you need to upload to a hosting site with hotlinking support. We use Dropbox. Upload this xml file to dropbox (not in the public folder). If your link ends with a zero, change it to one.
 
@@ -32,30 +32,26 @@ So if you build multiple devices you can add them all in on xml, capice?
 
 <?xml version="1.0" encoding="UTF-8"?>
 <SlimOTA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ota.xsd">
-    <Stable>
+    <OFFICIAL>
         <bacon>
-            <Filename>Tesla-bacon-5.1.1.High_Voltage.2.1-Release-20150828</Filename>
+            <Filename>Broken-v3.3-bacon-5.1.1-OFFICIAL-20150827.zip</Filename>
             <RomUrl
                 id="rom"
                 title="Rom"
-                description="Download Tesla build">http://validusrom.com/download/Tesla/Bacon/Tesla-bacon-5.1.1.High_Voltage.2.1-Release-20150828.zip</RomUrl>
+                description="Download Broken build">https://www.androidfilehost.com/?w=files&amp;flid=27352</RomUrl>
             <ChangelogUrl
                 id="changelog"
                 title="Changelog"
-                description="View Tesla changelogs">https://www.dropbox.com/s/nuw9561jnjyl33b/Changelog.txt?dl=0</ChangelogUrl>
+                description="View Broken changelogs">https://github.com/BrokenROM/Changelogs/tree/master/bacon</ChangelogUrl>
             <GappsUrl
                 id="gapps"
                 title="Gapps"
-                description="Download latest SlimGapps">http://104.236.22.120/index.php?device=gapps/lollipop/5.1</GappsUrl>
-            <XDAUrl
-                id="xda"
-                title="XDA"
-                description="Visit the XDA thread ">http://forum.xda-developers.com/showpost.php?p=62400258</XDAUrl>
+                description="Download latest BrokenGapps">https://www.androidfilehost.com/?w=files&amp;flid=18999</GappsUrl>
         </bacon>
-    </Stable>
+    </OFFICIAL>
 </SlimOTA>
 
-Now, moving to the ota_conf, you need to make this file in your Tesla project's root folder. SlimOTA's makefile will automatically take it to the desired location. 
+Now, moving to the ota_conf, you need to make this file in your Broken project's root folder. SlimOTA's makefile will automatically take it to the desired location. 
 Use the command "touch ota_conf" in your root folder to create the file, and edit it. Use the template for ota_conf that i will paste here below for your convenience.
 You need to Change the url to the one where you dropped your ota-lollipop (i hope it still clear upto now)
 
@@ -63,15 +59,15 @@ You need to Change the url to the one where you dropped your ota-lollipop (i hop
 
 #Add the url where you have uploaded the xml [ upload it to dropbox since it supports hot linking. keep dl=1 at the end of the link ]
 #ro.product.device will get the name of the device. Use the same name in ota-lollipop.xml in the tag
-ota_url=https://www.dropbox.com/s/kn3srtfwhjeyndy/ota-lollipop.xml?dl=1
-release_type=Stable
+ota_url=https://www.dropbox.com/s/l9s7pb0ldaw9axz/ota-lollipop.xml?dl=1
+release_type=OFFICIAL
 device_name=ro.product.device
  
-# example ro.modversion=Tesla-bacon-5.1.1.High_Voltage.2.1-Release-20150826.zip
+# example ro.broken.version=Broken-v3.3-bacon-5.1.1-OFFICIAL-20150827.zip
 # We have to get the date position out of that, so position 4 (i think) since the delimiter is set to -
-version_source=ro.modversion
+version_source=ro.broken.version
 version_delimiter=-
-version_position=4
+version_position=5
 version_format=yyyyMMdd
 
   All you have to do here is change ota_url to your dropbox location
